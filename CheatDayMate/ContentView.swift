@@ -8,17 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var viewRouter: ViewRouter
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            switch viewRouter.currentPage {
+            case .onboarding:
+                OnboardingView()
+            case .home:
+                HomeView()
+            case .login:
+                LoginView()
+            case .signUp:
+                SignUpView()
+            }
         }
-        .padding()
+        .transition(.slide)
+        .animation(.easeInOut, value: viewRouter.currentPage)
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .environmentObject(AuthViewModel())
+            .environmentObject(MainViewModel())
+    }
 }

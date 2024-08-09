@@ -7,39 +7,52 @@
 
 import SwiftUI
 
-struct MainTabView: View {
-    @State private var selectedTab = 0
+struct HomeView: View {
+    @EnvironmentObject var viewRouter: ViewRouter
+    @State private var isChubby = false
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            MainView()
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Main")
+        NavigationView {
+            VStack {
+                Text("Welcome to CheatDayMate!")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding()
+
+                CharacterView(isChubby: $isChubby)
+                    .frame(height: 300)
+
+                Button(action: {
+                    withAnimation {
+                        isChubby.toggle()
+                    }
+                }) {
+                    Text(isChubby ? "Slim Down" : "Cheat Day!")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(width: 200, height: 50)
+                        .background(isChubby ? Color.green : Color.orange)
+                        .cornerRadius(25)
                 }
-                .tag(0)
-            
-            DashboardView()
-                .tabItem {
-                    Image(systemName: "chart.bar.fill")
-                    Text("Dashboard")
+                .padding()
+
+                NavigationLink(destination: CalendarView()) {
+                    Text("View Calendar")
+                        .font(.headline)
+                        .foregroundColor(.blue)
                 }
-                .tag(1)
-            
-            CalendarView()
-                .tabItem {
-                    Image(systemName: "calendar")
-                    Text("Calendar")
-                }
-                .tag(2)
-            
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "person.fill")
-                    Text("Profile")
-                }
-                .tag(3)
+            }
+            .navigationBarItems(trailing: NavigationLink(destination: MyPageView()) {
+                Image(systemName: "person.circle")
+                    .imageScale(.large)
+            })
         }
-        .accentColor(Color(#colorLiteral(red: 0.9843137255, green: 0.4156862745, blue: 0.01176470588, alpha: 1)))
+    }
+}
+
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
+            .environmentObject(MainViewModel())
     }
 }
