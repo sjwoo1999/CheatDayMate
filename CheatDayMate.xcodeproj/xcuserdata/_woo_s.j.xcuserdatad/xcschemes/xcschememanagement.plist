@@ -7,7 +7,25 @@
 		<key>CheatDayMate.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>20</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>B84508532C6672D500B66212</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B84508632C6672D600B66212</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B845086D2C6672D600B66212</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
