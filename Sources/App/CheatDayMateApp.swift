@@ -12,7 +12,7 @@ struct CheatDayMateApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                WelcomeView()
+                SplashScreenView() // 앱 시작 시 SplashScreenView로 시작
             }
         }
     }
