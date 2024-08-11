@@ -10,7 +10,7 @@ import SwiftUI
 class CustomTabBarViewModel: ObservableObject {
     @Published var selectedTab: Int = 0
     
-    func selectTab(_ index: Int) {
-        selectedTab = index
+    func selectTab(_ tab: Int) {
+        selectedTab = tab
     }
 }

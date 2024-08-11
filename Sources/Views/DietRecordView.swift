@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct DietRecordView: View {
-    @StateObject private var viewModel = DietRecordViewModel()
+    @ObservedObject var viewModel: DietRecordViewModel
     @Binding var isPresented: Bool
     @State private var showingAddMeal = false
+    var showAddMealImmediately: Bool
     
     var body: some View {
         NavigationView {
@@ -24,6 +25,11 @@ struct DietRecordView: View {
             }
             .navigationTitle("식단 기록")
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("닫기") {
+                        isPresented = false
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showingAddMeal = true }) {
                         Image(systemName: "plus")
@@ -32,6 +38,11 @@ struct DietRecordView: View {
             }
             .sheet(isPresented: $showingAddMeal) {
                 AddMealView(viewModel: viewModel)
+            }
+        }
+        .onAppear {
+            if showAddMealImmediately {
+                showingAddMeal = true
             }
         }
     }

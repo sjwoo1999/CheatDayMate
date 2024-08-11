@@ -8,138 +8,133 @@
 import SwiftUI
 
 struct HomeTabView: View {
-    @StateObject private var viewModel = HomeTabViewModel()
+    @StateObject private var viewModel: HomeTabViewModel
+    @StateObject private var tabBarViewModel: CustomTabBarViewModel
+    @StateObject private var dietRecordViewModel: DietRecordViewModel
     @State private var showInputView = false
     @State private var blurRadius: CGFloat = 0
     
+    init() {
+        _viewModel = StateObject(wrappedValue: HomeTabViewModel())
+        _tabBarViewModel = StateObject(wrappedValue: CustomTabBarViewModel())
+        _dietRecordViewModel = StateObject(wrappedValue: DietRecordViewModel())
+    }
+    
     var body: some View {
-        ZStack {
-            VStack(spacing: 16) {
-                // 상단에 테스트용 버튼 배치
-                HStack {
-                    Button(action: {
-                        viewModel.addCalories(-10000)
-                    }) {
-                        Text("-10,000 칼로리")
-                            .padding()
-                            .background(Color.red)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
+        GeometryReader { geometry in
+            ZStack {
+                Color(hex: "#ffeeae")
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack(spacing: 0) {
+                    // 상단 버튼
+                    HStack {
+                        Button(action: { viewModel.addCalories(-10000) }) {
+                            Text("-10,000 칼로리")
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 15)
+                                .background(Color.red)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                                .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 2)
+                        }
+                        Spacer()
+                        Button(action: { viewModel.addCalories(10000) }) {
+                            Text("+10,000 칼로리")
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 15)
+                                .background(Color.green)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                                .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 2)
+                        }
                     }
-                    Spacer()
-                    Button(action: {
-                        viewModel.addCalories(10000)
-                    }) {
-                        Text("+10,000 칼로리")
+                    .padding(.horizontal, 20)
+                    .padding(.top, geometry.safeAreaInsets.top + 10)
+                    
+                    // 메인 콘텐츠
+                    VStack(spacing: geometry.size.height * 0.03) {
+                        Text("오늘은? \(viewModel.formattedDate)")
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(.orange)
+                            .padding(.top, geometry.size.height * 0.05)
+                        
+                        ProgressView(value: Double(viewModel.currentCalories), total: Double(viewModel.goalCalories))
+                            .progressViewStyle(CalorieProgressStyle())
+                            .frame(width: geometry.size.width * 0.85)
+                        
+                        Image(viewModel.catImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: geometry.size.height * 0.25)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
+                        
+                        Text(viewModel.catMessage)
+                            .font(.system(size: 18, weight: .medium))
                             .padding()
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
+                            .background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.orange, lineWidth: 2))
+                            .multilineTextAlignment(.center)
+                            .frame(width: geometry.size.width * 0.85)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 3)
+                        
+                        Spacer()
                     }
-                }
-                .padding(.horizontal)
-                
-                Spacer()
-                
-                // 칼로리, 프로그레스 바, 고양이, 메시지를 중앙으로 배치
-                // 추후 여기에 D-Day 설정해두기
-                VStack(spacing: 16) {
-                    Text("오늘은? \(viewModel.formattedDate)")
-                        .font(.headline)
-                        .foregroundColor(.orange)
+                    .frame(maxWidth: .infinity)
                     
-                    // 칼로리 프로그레스 바
-                    ProgressView(value: Double(viewModel.currentCalories), total: Double(viewModel.goalCalories))
-                        .progressViewStyle(CalorieProgressStyle())
-                    
-                    Image(viewModel.catImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 200)
-                    
-                    // 말풍선 메시지
-                    Text(viewModel.catMessage)
-                        .font(.system(size: 18, weight: .medium))
-                        .padding()
-                        .background(Color.white)
-                        .clipShape(Capsule())
-                        .overlay(Capsule().stroke(Color.orange, lineWidth: 2))
-                        .multilineTextAlignment(.center) // 텍스트 가운데 정렬
-                        .padding()
-                }
-                .padding()
-                
-                Spacer()
-                
-                // Custom Tab Bar with the "+" button at the top of the arch
-                ZStack {
-                    CustomTabBar(viewModel: viewModel.tabBarViewModel)
-                        .frame(height: 70)
-                        .background(Color.white)
-                        .clipShape(TabBarShape()) // 아치형 디자인
-                        .shadow(radius: 5)
-                    
-                    // 플러스 버튼을 아치형 디자인 위에 배치
-                    Button(action: {
+                    // 탭바
+                    CustomTabBar(viewModel: tabBarViewModel, onPlusButtonTap: {
                         withAnimation(.spring()) {
                             showInputView = true
                             blurRadius = 10
                         }
-                    }) {
-                        Image(systemName: "plus")
-                            .foregroundColor(.white)
-                            .font(.title)
-                            .frame(width: 70, height: 70)
-                            .background(Color.orange)
-                            .clipShape(Circle())
-                            .shadow(radius: 10)
-                    }
-                    .offset(y: -60) // 플러스 버튼을 더 위로 올림
+                    })
+                    .frame(height: 100)
                 }
-                .padding(.bottom, 40) // 홈 인디케이터와의 간격 추가 확보
-            }
-            .blur(radius: blurRadius)
-            
-            // InputView
-            if showInputView {
-                Color.black.opacity(0.3)
-                    .edgesIgnoringSafeArea(.all)
-                    .onTapGesture {
-                        withAnimation(.spring()) {
-                            showInputView = false
-                            blurRadius = 0
-                        }
-                    }
+                .blur(radius: blurRadius)
+                .edgesIgnoringSafeArea(.bottom)
                 
-                InputView(isPresented: $showInputView, blurRadius: $blurRadius, addCalories: { calories in
-                    print("칼로리 추가됨")
-                }).transition(.move(edge: .bottom))
+                // InputView
+                if showInputView {
+                    Color.black.opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            withAnimation(.spring()) {
+                                showInputView = false
+                                blurRadius = 0
+                            }
+                        }
+                    
+                    InputView(isPresented: $showInputView, blurRadius: $blurRadius, dietRecordViewModel: dietRecordViewModel)
+                                            .transition(.move(edge: .bottom))
+                                            .zIndex(1)
+                }
             }
         }
-        .edgesIgnoringSafeArea(.bottom)
-        .navigationBarBackButtonHidden(true) // Back 버튼 숨기기
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 struct CalorieProgressStyle: ProgressViewStyle {
     func makeBody(configuration: Configuration) -> some View {
         ZStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 14)
-                .frame(height: 28)
-                .foregroundColor(.orange.opacity(0.3))
+            RoundedRectangle(cornerRadius: 15)
+                .frame(height: 30)
+                .foregroundColor(Color(hex: "#49406F").opacity(0.3))
             
-            RoundedRectangle(cornerRadius: 14)
-                .frame(width: CGFloat(configuration.fractionCompleted ?? 0) * UIScreen.main.bounds.width * 0.9, height: 28)
-                .foregroundColor(.orange)
+            RoundedRectangle(cornerRadius: 15)
+                .frame(width: CGFloat(configuration.fractionCompleted ?? 0) * UIScreen.main.bounds.width * 0.85, height: 30)
+                .foregroundColor(Color(hex: "#49406F"))
             
             HStack {
                 Spacer()
                 Text("\(Int((configuration.fractionCompleted ?? 0) * 150000)) / 150,000")
                     .foregroundColor(.white)
-                    .font(.caption)
-                    .padding(.trailing, 8)
+                    .font(.system(size: 14, weight: .bold))
+                    .padding(.trailing, 10)
             }
         }
-        .frame(height: 30)
+        .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
     }
 }

@@ -10,8 +10,9 @@ import SwiftUI
 struct InputView: View {
     @Binding var isPresented: Bool
     @Binding var blurRadius: CGFloat
-    var addCalories: (Int) -> Void
+    @ObservedObject var dietRecordViewModel: DietRecordViewModel
     @State private var offset: CGFloat = UIScreen.main.bounds.height
+    @State private var showDietRecordView = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -19,7 +20,6 @@ struct InputView: View {
                 Spacer()
                 VStack(spacing: 20) {
                     RoundedRectangle(cornerRadius: 3)
-            //            .fill(Color.gray.opacity(0.3))
                         .frame(width: 40, height: 6)
                         .padding(.top, 8)
                     
@@ -28,13 +28,12 @@ struct InputView: View {
                         .foregroundColor(.white)
                     
                     Button("식단") {
-                        addCalories(500)
-                        dismissView()
+                        showDietRecordView = true
                     }
                     .buttonStyle(InputButtonStyle())
                     
                     Button("운동") {
-                        addCalories(-300)
+                        // 운동 기록 로직 (아직 구현되지 않음)
                         dismissView()
                     }
                     .buttonStyle(InputButtonStyle())
@@ -57,6 +56,9 @@ struct InputView: View {
             withAnimation(.spring()) {
                 offset = 0
             }
+        }
+        .fullScreenCover(isPresented: $showDietRecordView) {
+            DietRecordView(viewModel: dietRecordViewModel, isPresented: $showDietRecordView, showAddMealImmediately: true)
         }
     }
     
