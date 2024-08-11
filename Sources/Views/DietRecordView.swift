@@ -16,33 +16,52 @@ struct DietRecordView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                DatePicker("날짜 선택", selection: $viewModel.selectedDate, displayedComponents: .date)
-                    .datePickerStyle(GraphicalDatePickerStyle())
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(10)
-                    .padding(.horizontal)
+            ZStack {
+                Color.orange.edgesIgnoringSafeArea(.all)
                 
-                List {
-                    ForEach(viewModel.meals) { meal in
-                        MealRow(meal: meal)
-                            .padding(.vertical, 8)
-                            .onTapGesture {
-                                selectedMeal = meal
+                VStack(spacing: 20) {
+                    DatePicker("날짜 선택", selection: $viewModel.selectedDate, displayedComponents: .date)
+                        .datePickerStyle(GraphicalDatePickerStyle())
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(15)
+                        .padding(.horizontal)
+                    
+                    ScrollView {
+                        LazyVStack(spacing: 15) {
+                            ForEach(viewModel.meals) { meal in
+                                MealRow(meal: meal)
+                                    .background(Color.white)
+                                    .cornerRadius(15)
+                                    .shadow(radius: 5)
+                                    .padding(.horizontal)
+                                    .onTapGesture {
+                                        selectedMeal = meal
+                                    }
                             }
-                    }
-                    .onDelete { indexSet in
-                        viewModel.deleteMeal(at: indexSet)
+                        }
                     }
                 }
-                .listStyle(InsetGroupedListStyle())
+                
+                VStack {
+                    Spacer()
+                    Button(action: { showingAddMeal = true }) {
+                        Text("식사 추가")
+                            .font(.headline)
+                            .foregroundColor(.orange)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.white)
+                            .cornerRadius(15)
+                            .shadow(radius: 5)
+                    }
+                    .padding()
+                }
             }
-            .navigationTitle(navigationTitle)
-            .toolbar {
-                toolbarItems
-            }
+            .navigationBarTitle(navigationTitle, displayMode: .inline)
+            .navigationBarItems(leading: dismissButton, trailing: addButton)
         }
+        .accentColor(.white)
         .sheet(isPresented: $showingAddMeal) {
             AddMealView(viewModel: viewModel, isPresented: $showingAddMeal)
         }
@@ -64,19 +83,18 @@ struct DietRecordView: View {
         return dateFormatter.string(from: viewModel.selectedDate)
     }
     
-    private var toolbarItems: some ToolbarContent {
-        Group {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("닫기") {
-                    isPresented = false
-                }
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: { showingAddMeal = true }) {
-                    Image(systemName: "plus")
-                        .font(.title)
-                }
-            }
+    private var dismissButton: some View {
+        Button("닫기") {
+            isPresented = false
+        }
+        .foregroundColor(.white)
+    }
+    
+    private var addButton: some View {
+        Button(action: { showingAddMeal = true }) {
+            Image(systemName: "plus")
+                .font(.title)
+                .foregroundColor(.white)
         }
     }
 }
@@ -89,18 +107,19 @@ struct MealRow: View {
             if let imageData = meal.imageData, let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .frame(width: 60, height: 60)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text(meal.name)
                     .font(.headline)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.black)
                 Text("\(meal.calories) kcal")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.gray)
             }
             Spacer()
         }
+        .padding()
     }
 }

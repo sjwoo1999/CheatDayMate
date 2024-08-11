@@ -20,69 +20,20 @@ struct AddMealView: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("식사 정보").font(.title2).padding(.bottom, 5)) {
-                    TextField("식사 이름", text: $mealName)
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(10)
-                    TextField("칼로리", text: $calories)
-                        .keyboardType(.numberPad)
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(10)
-                }
+            ZStack {
+                Color.orange.edgesIgnoringSafeArea(.all)
                 
-                Section {
-                    PhotosPicker(selection: $selectedItem, matching: .images) {
-                        Text("식사 이미지 선택")
-                            .foregroundColor(.blue)
-                            .padding()
-                    }
-                    
-                    if let selectedImageData,
-                       let uiImage = UIImage(data: selectedImageData) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 200)
-                            .cornerRadius(10)
-                            .padding(.top)
-                    }
+                VStack(spacing: 20) {
+                    inputSection
+                    imageSection
+                    addButton
                 }
-                
-                Section {
-                    Button(action: {
-                        if let caloriesInt = Int(calories) {
-                            viewModel.addMeal(name: mealName, calories: caloriesInt, imageData: selectedImageData)
-                            isPresented = false
-                        }
-                    }) {
-                        Text("추가")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    }
-                    .disabled(viewModel.isAnalyzing)
-                    
-                    if viewModel.isAnalyzing {
-                        ProgressView("분석 중...")
-                    }
-
-                    if let error = viewModel.error {
-                        Text("오류: \(error)")
-                            .foregroundColor(.red)
-                    }
-                }
+                .padding()
             }
-            .navigationTitle("식사 추가")
-            .navigationBarItems(leading: Button("취소") {
-                isPresented = false
-            })
+            .navigationBarTitle("식사 추가", displayMode: .inline)
+            .navigationBarItems(leading: cancelButton)
         }
+        .accentColor(.white)
         .onChange(of: selectedItem) { _ in
             Task {
                 if let data = try? await selectedItem?.loadTransferable(type: Data.self) {
@@ -103,6 +54,82 @@ struct AddMealView: View {
             if let analysis = newMealAnalysis {
                 MealAnalysisResultView(result: MealAnalysisResult(content: analysis))
             }
+        }
+    }
+    
+    private var inputSection: some View {
+        VStack(spacing: 15) {
+            TextField("식사 이름", text: $mealName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+                .background(Color.white)
+                .cornerRadius(15)
+            
+            TextField("칼로리", text: $calories)
+                .keyboardType(.numberPad)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+                .background(Color.white)
+                .cornerRadius(15)
+        }
+    }
+    
+    private var imageSection: some View {
+        VStack {
+            PhotosPicker(selection: $selectedItem, matching: .images) {
+                Text("식사 이미지 선택")
+                    .foregroundColor(.orange)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
+                    .cornerRadius(15)
+            }
+            
+            if let selectedImageData,
+               let uiImage = UIImage(data: selectedImageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 200)
+                    .cornerRadius(15)
+                    .padding(.top)
+            }
+        }
+    }
+    
+    private var addButton: some View {
+        Button(action: addMeal) {
+            Text("추가")
+                .font(.headline)
+                .foregroundColor(.orange)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.white)
+                .cornerRadius(15)
+        }
+        .disabled(viewModel.isAnalyzing)
+        .opacity(viewModel.isAnalyzing ? 0.5 : 1)
+        .overlay(
+            Group {
+                if viewModel.isAnalyzing {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                }
+            }
+        )
+    }
+    
+    private var cancelButton: some View {
+        Button("취소") {
+            isPresented = false
+        }
+        .foregroundColor(.white)
+    }
+    
+    private func addMeal() {
+        if let caloriesInt = Int(calories) {
+            viewModel.addMeal(name: mealName, calories: caloriesInt, imageData: selectedImageData)
+            isPresented = false
         }
     }
 }
