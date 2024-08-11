@@ -9,4 +9,6 @@ Pods/
 *.xcworkspace
 DerivedData/
 build/
-Config/Config.xcconfig
+
+# Config files
+*.xcconfig
