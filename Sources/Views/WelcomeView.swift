@@ -44,7 +44,7 @@ struct WelcomeView: View {
                     .cornerRadius(10)
                 }
                 
-                NavigationLink(destination: HomeTabView(), isActive: Binding(
+                NavigationLink(destination: HomeTabView(authService: AuthService(), chatGPTService: ChatGPTService(apiKey: AppConfig.chatGPTAPIKey)), isActive: Binding(
                     get: { viewModel.navigationDestination == "HomeTabView" },
                     set: { isActive in
                         if !isActive {

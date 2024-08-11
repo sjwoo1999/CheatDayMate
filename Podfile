@@ -11,6 +11,8 @@ target 'CheatDayMate' do
   # KakaoSDK 통합 pod 사용
   pod 'KakaoSDK'
 
+  pod 'OpenAISwift'
+
   # CheatDayMate 앱을 위한 Pods
   # 필요한 경우 여기에 추가 pod를 명시할 수 있습니다.
 

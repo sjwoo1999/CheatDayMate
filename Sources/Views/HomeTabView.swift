@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct HomeTabView: View {
+    @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var chatGPTService: ChatGPTService
     @StateObject private var viewModel: HomeTabViewModel
-    @StateObject private var tabBarViewModel: CustomTabBarViewModel
-    @StateObject private var dietRecordViewModel: DietRecordViewModel
+    @StateObject private var tabBarViewModel = CustomTabBarViewModel()
+    @StateObject private var dietRecordViewModel = DietRecordViewModel(chatGPTService: ChatGPTService(apiKey: AppConfig.chatGPTAPIKey))
     @State private var showInputView = false
     @State private var blurRadius: CGFloat = 0
     
-    init() {
+    init(authService: AuthService, chatGPTService: ChatGPTService) {
         _viewModel = StateObject(wrappedValue: HomeTabViewModel())
-        _tabBarViewModel = StateObject(wrappedValue: CustomTabBarViewModel())
-        _dietRecordViewModel = StateObject(wrappedValue: DietRecordViewModel())
     }
     
     var body: some View {
@@ -27,7 +27,7 @@ struct HomeTabView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 0) {
-                    // 상단 버튼
+                    // Top buttons
                     HStack {
                         Button(action: { viewModel.addCalories(-10000) }) {
                             Text("-10,000 칼로리")
@@ -52,7 +52,7 @@ struct HomeTabView: View {
                     .padding(.horizontal, 20)
                     .padding(.top, geometry.safeAreaInsets.top + 10)
                     
-                    // 메인 콘텐츠
+                    // Main content
                     VStack(spacing: geometry.size.height * 0.03) {
                         Text("오늘은? \(viewModel.formattedDate)")
                             .font(.system(size: 24, weight: .bold))
@@ -83,7 +83,7 @@ struct HomeTabView: View {
                     }
                     .frame(maxWidth: .infinity)
                     
-                    // 탭바
+                    // Tab bar
                     CustomTabBar(viewModel: tabBarViewModel, onPlusButtonTap: {
                         withAnimation(.spring()) {
                             showInputView = true
@@ -107,8 +107,8 @@ struct HomeTabView: View {
                         }
                     
                     InputView(isPresented: $showInputView, blurRadius: $blurRadius, dietRecordViewModel: dietRecordViewModel)
-                                            .transition(.move(edge: .bottom))
-                                            .zIndex(1)
+                        .transition(.move(edge: .bottom))
+                        .zIndex(1)
                 }
             }
         }
@@ -118,23 +118,25 @@ struct HomeTabView: View {
 
 struct CalorieProgressStyle: ProgressViewStyle {
     func makeBody(configuration: Configuration) -> some View {
-        ZStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 15)
-                .frame(height: 30)
-                .foregroundColor(Color(hex: "#49406F").opacity(0.3))
-            
-            RoundedRectangle(cornerRadius: 15)
-                .frame(width: CGFloat(configuration.fractionCompleted ?? 0) * UIScreen.main.bounds.width * 0.85, height: 30)
-                .foregroundColor(Color(hex: "#49406F"))
-            
-            HStack {
-                Spacer()
-                Text("\(Int((configuration.fractionCompleted ?? 0) * 150000)) / 150,000")
-                    .foregroundColor(.white)
-                    .font(.system(size: 14, weight: .bold))
-                    .padding(.trailing, 10)
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 15)
+                    .frame(height: 30)
+                    .foregroundColor(Color(hex: "#49406F").opacity(0.3))
+                
+                RoundedRectangle(cornerRadius: 15)
+                    .frame(width: CGFloat(configuration.fractionCompleted ?? 0) * geometry.size.width, height: 30)
+                    .foregroundColor(Color(hex: "#49406F"))
+                
+                HStack {
+                    Spacer()
+                    Text("\(Int((configuration.fractionCompleted ?? 0) * 150000)) / 150,000")
+                        .foregroundColor(.white)
+                        .font(.system(size: 14, weight: .bold))
+                        .padding(.trailing, 10)
+                }
             }
+            .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
         }
-        .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
     }
 }

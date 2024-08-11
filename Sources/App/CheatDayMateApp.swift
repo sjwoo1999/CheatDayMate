@@ -9,12 +9,14 @@ import SwiftUI
 
 @main
 struct CheatDayMateApp: App {
+    @StateObject private var authService = AuthService()
+    @StateObject private var chatGPTService = ChatGPTService(apiKey: AppConfig.chatGPTAPIKey)
+
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                //SplashScreenView() // 앱 시작 시 SplashScreenView로 시작
-                HomeTabView()
-            }
+            SplashScreenView()
+                .environmentObject(authService)
+                .environmentObject(chatGPTService)
         }
     }
 }

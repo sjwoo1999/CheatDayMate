@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct SplashScreenView: View {
+    @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var chatGPTService: ChatGPTService
+    
     @State private var logoOffset: CGFloat = 200 // 초기 오프셋 (화면 하단에서 시작)
     @State private var navigateToHome = false // HomeTabView로의 네비게이션 플래그
 
     var body: some View {
         if navigateToHome {
-            HomeTabView() // 네비게이션 플래그가 true가 되면 HomeTabView로 이동
+            HomeTabView(authService: AuthService(), chatGPTService: ChatGPTService(apiKey: AppConfig.chatGPTAPIKey)) // 네비게이션 플래그가 true가 되면 HomeTabView로 이동
         } else {
             ZStack {
                 Color(hex: "FA833F").edgesIgnoringSafeArea(.all) // 배경 색상
@@ -60,3 +63,4 @@ extension Color {
         self.init(red: r, green: g, blue: b)
     }
 }
+

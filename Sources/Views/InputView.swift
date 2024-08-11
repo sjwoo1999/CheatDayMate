@@ -74,15 +74,15 @@ struct InputView: View {
 }
 
 struct InputButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
+    func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .foregroundColor(.orange)
+            .foregroundColor(Color.orange)
             .padding()
             .frame(maxWidth: .infinity)
             .background(Color.white)
             .cornerRadius(10)
             .padding(.horizontal)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
     }
 }
 
@@ -93,7 +93,7 @@ extension View {
 }
 
 struct RoundedCorner: Shape {
-    var radius: CGFloat = .infinity
+    var radius: CGFloat = CGFloat.infinity
     var corners: UIRectCorner = .allCorners
 
     func path(in rect: CGRect) -> Path {
@@ -101,3 +101,6 @@ struct RoundedCorner: Shape {
         return Path(path.cgPath)
     }
 }
+
+// 예시: horizontal 사용
+// .padding(.horizontal, 10)

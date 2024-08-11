@@ -29,7 +29,7 @@ struct KakaoLoginView: View {
             }
             .navigationDestination(for: String.self) { value in
                 if value == "HomeTabView" {
-                    HomeTabView()
+                    HomeTabView(authService: AuthService(), chatGPTService: ChatGPTService(apiKey: AppConfig.chatGPTAPIKey))
                 }
             }
         }

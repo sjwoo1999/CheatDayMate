@@ -9,34 +9,57 @@ import Foundation
 import Combine
 
 class DietRecordViewModel: ObservableObject {
-    @Published var meals: [CheatDayMate.Meal] = []
+    @Published var meals: [Meal] = []
+    @Published var isAnalyzing: Bool = false
+    @Published var error: String?
+    @Published var analysisResults: [UUID: String] = [:]
     @Published var selectedDate: Date = Date()
     
-    private var cancellables = Set<AnyCancellable>()
+    private let chatGPTService: ChatGPTService
     
-    init() {
-        loadMeals()
+    init(chatGPTService: ChatGPTService) {
+        self.chatGPTService = chatGPTService
+    }
+    
+    func addMeal(name: String, calories: Int, imageData: Data?) {
+        let newMeal = Meal(id: UUID(), name: name, calories: calories, date: selectedDate)
+        meals.append(newMeal)
         
-        $selectedDate
-            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.loadMeals()
-            }
-            .store(in: &cancellables)
-    }
-    
-    func loadMeals() {
-        // 실제 앱에서는 여기서 데이터베이스나 API에서 식사 데이터를 로드합니다.
-        meals = CheatDayMate.Meal.sampleMeals.filter { Calendar.current.isDate($0.time, inSameDayAs: selectedDate) }
-    }
-    
-    func addMeal(_ meal: CheatDayMate.Meal) {
-        meals.append(meal)
-        // 실제 앱에서는 여기서 데이터를 저장합니다.
+        if let imageData = imageData {
+            analyzeMealImage(mealId: newMeal.id, imageData: imageData)
+        }
     }
     
     func deleteMeal(at offsets: IndexSet) {
         meals.remove(atOffsets: offsets)
-        // 실제 앱에서는 여기서 데이터를 삭제합니다.
+    }
+    
+    private func analyzeMealImage(mealId: UUID, imageData: Data) {
+        isAnalyzing = true
+        error = nil
+        
+        Task {
+            do {
+                let analysis = try await chatGPTService.analyzeImage(imageData)
+                DispatchQueue.main.async {
+                    self.analysisResults[mealId] = analysis
+                    self.isAnalyzing = false
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.error = error.localizedDescription
+                    self.isAnalyzing = false
+                }
+            }
+        }
+    }
+    
+    func getAnalysisResult(for meal: Meal) -> String? {
+        return analysisResults[meal.id]
+    }
+    
+    func loadMeals(for date: Date) {
+        // TODO: Implement loading meals for a specific date
+        // This could involve fetching from a local database or an API
     }
 }

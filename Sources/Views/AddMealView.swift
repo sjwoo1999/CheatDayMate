@@ -6,42 +6,103 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct AddMealView: View {
     @ObservedObject var viewModel: DietRecordViewModel
-    @Environment(\.presentationMode) var presentationMode
+    @Binding var isPresented: Bool
     @State private var mealName = ""
-    @State private var mealTime = Date()
-    @State private var calories = 0
-    @State private var image: UIImage?
-    
+    @State private var calories = ""
+    @State private var selectedItem: PhotosPickerItem?
+    @State private var selectedImageData: Data?
+    @State private var showingAnalysisResult = false
+    @State private var newMealAnalysis: String?
+
     var body: some View {
         NavigationView {
             Form {
-                TextField("식사 이름", text: $mealName)
-                DatePicker("시간", selection: $mealTime, displayedComponents: .hourAndMinute)
-                Stepper("칼로리: \(calories)", value: $calories, in: 0...5000)
-                
-                Button("사진 추가") {
-                    // 이미지 피커 로직 구현
+                Section(header: Text("식사 정보").font(.title2).padding(.bottom, 5)) {
+                    TextField("식사 이름", text: $mealName)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                    TextField("칼로리", text: $calories)
+                        .keyboardType(.numberPad)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
                 }
                 
-                if let image = image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 200)
+                Section {
+                    PhotosPicker(selection: $selectedItem, matching: .images) {
+                        Text("식사 이미지 선택")
+                            .foregroundColor(.blue)
+                            .padding()
+                    }
+                    
+                    if let selectedImageData,
+                       let uiImage = UIImage(data: selectedImageData) {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 200)
+                            .cornerRadius(10)
+                            .padding(.top)
+                    }
+                }
+                
+                Section {
+                    Button(action: {
+                        if let caloriesInt = Int(calories) {
+                            viewModel.addMeal(name: mealName, calories: caloriesInt, imageData: selectedImageData)
+                            isPresented = false
+                        }
+                    }) {
+                        Text("추가")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
+                    .disabled(viewModel.isAnalyzing)
+                    
+                    if viewModel.isAnalyzing {
+                        ProgressView("분석 중...")
+                    }
+
+                    if let error = viewModel.error {
+                        Text("오류: \(error)")
+                            .foregroundColor(.red)
+                    }
                 }
             }
-            .navigationBarTitle("식사 추가", displayMode: .inline)
-            .navigationBarItems(
-                leading: Button("취소") { presentationMode.wrappedValue.dismiss() },
-                trailing: Button("저장") {
-                    let newMeal = Meal(name: mealName, time: mealTime, calories: calories, imageData: image?.pngData())
-                    viewModel.addMeal(newMeal)
-                    presentationMode.wrappedValue.dismiss()
+            .navigationTitle("식사 추가")
+            .navigationBarItems(leading: Button("취소") {
+                isPresented = false
+            })
+        }
+        .onChange(of: selectedItem) { _ in
+            Task {
+                if let data = try? await selectedItem?.loadTransferable(type: Data.self) {
+                    selectedImageData = data
                 }
-            )
+            }
+        }
+        .onChange(of: viewModel.isAnalyzing) { isAnalyzing in
+            if !isAnalyzing, viewModel.error == nil {
+                if let lastMeal = viewModel.meals.last,
+                   let analysis = viewModel.getAnalysisResult(for: lastMeal) {
+                    newMealAnalysis = analysis
+                    showingAnalysisResult = true
+                }
+            }
+        }
+        .sheet(isPresented: $showingAnalysisResult) {
+            if let analysis = newMealAnalysis {
+                MealAnalysisResultView(result: MealAnalysisResult(content: analysis))
+            }
         }
     }
 }

@@ -1,0 +1,30 @@
+//
+//  AddMealViewModel.swift
+//  CheatDayMate
+//
+//  Created by 우성종 on 8/11/24.
+//
+
+import Foundation
+
+class AddMealViewModel: ObservableObject {
+    private let chatGPTService: ChatGPTService
+    @Published var analysisResult: String?
+    
+    init(chatGPTService: ChatGPTService) {
+        self.chatGPTService = chatGPTService
+    }
+    
+    func analyzeImage(_ imageData: Data) {
+        Task {
+            do {
+                let result = try await chatGPTService.analyzeImage(imageData)
+                DispatchQueue.main.async {
+                    self.analysisResult = result
+                }
+            } catch {
+                // 에러 처리
+            }
+        }
+    }
+}
