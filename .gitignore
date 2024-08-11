@@ -11,4 +11,4 @@ DerivedData/
 build/
 
 # Config files
-*.xcconfig
+*.xcconfig*.pbxproj
