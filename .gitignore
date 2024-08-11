@@ -11,4 +11,7 @@ DerivedData/
 build/
 
 # Config files
-*.xcconfig*.pbxproj
+*.xcconfig
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
