@@ -14,4 +14,5 @@ build/
 *.xcconfig
 *.xcuserstate
 project.xcworkspace/
-xcuserdata/
+xcuserdata/CheatDayMate.xcodeproj/project.pbxproj
+Config/Config.xcconfig
