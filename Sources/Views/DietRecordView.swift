@@ -8,118 +8,147 @@
 import SwiftUI
 
 struct DietRecordView: View {
-    @ObservedObject var viewModel: DietRecordViewModel
-    @Binding var isPresented: Bool
-    @State private var showingAddMeal = false
-    @State private var selectedMeal: Meal?
-    var showAddMealImmediately: Bool
-    
+    @StateObject private var viewModel = DietRecordViewModel()
+    @State private var showingAddMealView = false
+    @State private var selectedDate = Date()
+    @State private var errorMessage: String?
+    @State private var showingErrorAlert = false
+
     var body: some View {
         NavigationView {
-            ZStack {
-                Color.orange.edgesIgnoringSafeArea(.all)
-                
-                VStack(spacing: 20) {
-                    DatePicker("날짜 선택", selection: $viewModel.selectedDate, displayedComponents: .date)
-                        .datePickerStyle(GraphicalDatePickerStyle())
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(15)
-                        .padding(.horizontal)
-                    
-                    ScrollView {
-                        LazyVStack(spacing: 15) {
-                            ForEach(viewModel.meals) { meal in
-                                MealRow(meal: meal)
-                                    .background(Color.white)
-                                    .cornerRadius(15)
-                                    .shadow(radius: 5)
-                                    .padding(.horizontal)
-                                    .onTapGesture {
-                                        selectedMeal = meal
-                                    }
-                            }
-                        }
-                    }
-                }
-                
-                VStack {
-                    Spacer()
-                    Button(action: { showingAddMeal = true }) {
-                        Text("식사 추가")
-                            .font(.headline)
-                            .foregroundColor(.orange)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.white)
-                            .cornerRadius(15)
-                            .shadow(radius: 5)
-                    }
+            VStack {
+                DatePicker("Select Date", selection: $selectedDate, displayedComponents: .date)
+                    .datePickerStyle(CompactDatePickerStyle())
                     .padding()
+                    .onChange(of: selectedDate) { newValue in
+                        loadMeals(for: newValue)
+                    }
+
+                List {
+                    ForEach(viewModel.meals) { meal in
+                        MealRow(meal: meal, viewModel: viewModel)
+                    }
+                    .onDelete(perform: deleteMeal)
+                }
+                .listStyle(PlainListStyle())
+
+                Button(action: { showingAddMealView = true }) {
+                    Text("Add Meal")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
+                .padding()
+            }
+            .navigationTitle("Diet Record")
+            .onAppear {
+                loadMeals(for: selectedDate)
+            }
+            .sheet(isPresented: $showingAddMealView) {
+                AddMealView(viewModel: viewModel, isPresented: $showingAddMealView)
+            }
+            .alert(isPresented: $showingErrorAlert) {
+                Alert(title: Text("Error"), message: Text(errorMessage ?? "An unknown error occurred"), dismissButton: .default(Text("OK")))
+            }
+        }
+    }
+
+    private func loadMeals(for date: Date) {
+        Task {
+            do {
+                try await viewModel.loadMeals(for: date)
+            } catch {
+                await MainActor.run {
+                    errorMessage = "Failed to load meals: \(error.localizedDescription)"
+                    showingErrorAlert = true
                 }
             }
-            .navigationBarTitle(navigationTitle, displayMode: .inline)
-            .navigationBarItems(leading: dismissButton, trailing: addButton)
-        }
-        .accentColor(.white)
-        .sheet(isPresented: $showingAddMeal) {
-            AddMealView(viewModel: viewModel, isPresented: $showingAddMeal)
-        }
-        .sheet(item: $selectedMeal) { meal in
-            if let analysis = viewModel.getAnalysisResult(for: meal) {
-                MealAnalysisResultView(result: MealAnalysisResult(content: analysis))
-            }
-        }
-        .onAppear {
-            if showAddMealImmediately {
-                showingAddMeal = true
-            }
         }
     }
-    
-    private var navigationTitle: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
-        return dateFormatter.string(from: viewModel.selectedDate)
-    }
-    
-    private var dismissButton: some View {
-        Button("닫기") {
-            isPresented = false
-        }
-        .foregroundColor(.white)
-    }
-    
-    private var addButton: some View {
-        Button(action: { showingAddMeal = true }) {
-            Image(systemName: "plus")
-                .font(.title)
-                .foregroundColor(.white)
-        }
+
+    private func deleteMeal(at offsets: IndexSet) {
+        viewModel.meals.remove(atOffsets: offsets)
     }
 }
 
 struct MealRow: View {
     let meal: Meal
-    
+    @ObservedObject var viewModel: DietRecordViewModel
+    @State private var showingAnalysisResult = false
+
     var body: some View {
-        HStack {
-            if let imageData = meal.imageData, let uiImage = UIImage(data: imageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .frame(width: 60, height: 60)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-            }
-            VStack(alignment: .leading, spacing: 5) {
-                Text(meal.name)
-                    .font(.headline)
-                    .foregroundColor(.black)
-                Text("\(meal.calories) kcal")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-            }
-            Spacer()
+        VStack(alignment: .leading, spacing: 5) {
+            Text(meal.name)
+                .font(.headline)
+            Text("\(meal.calories) kcal")
+                .font(.subheadline)
+                .foregroundColor(.gray)
         }
-        .padding()
+        .onTapGesture {
+            viewModel.selectedMealForAnalysis = meal
+            analyzeMeal()
+        }
+        .sheet(isPresented: $showingAnalysisResult) {
+            if let result = viewModel.analysisResult {
+                DietAnalysisResultView(result: result)
+            } else {
+                ProgressView("Analyzing...")
+            }
+        }
+    }
+
+    private func analyzeMeal() {
+        Task {
+            do {
+                let result = try await viewModel.analyzeDiet(meal: meal)
+                await MainActor.run {
+                    viewModel.analysisResult = result
+                    showingAnalysisResult = true
+                }
+            } catch {
+                print("Failed to analyze diet: \(error.localizedDescription)")
+                // 에러 처리 로직 추가
+            }
+        }
+    }
+}
+
+struct DietAnalysisResultView: View {
+    let result: DietAnalysisResult
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Diet Analysis Result")
+                    .font(.title)
+                    .padding(.bottom)
+
+                Text("Total Calories: \(result.totalCalories) kcal")
+                    .font(.headline)
+
+                Text("Macro Ratio:")
+                    .font(.headline)
+                Text("Carbs: \(Int(result.macroRatio.carbs * 100))%")
+                Text("Protein: \(Int(result.macroRatio.protein * 100))%")
+                Text("Fat: \(Int(result.macroRatio.fat * 100))%")
+
+                Text("Nutritional Analysis:")
+                    .font(.headline)
+                    .padding(.top)
+                Text(result.nutritionalAnalysis)
+
+                Text("Recommendations:")
+                    .font(.headline)
+                    .padding(.top)
+                Text(result.recommendations)
+
+                Text("Precautions:")
+                    .font(.headline)
+                    .padding(.top)
+                Text(result.precautions)
+            }
+            .padding()
+        }
     }
 }

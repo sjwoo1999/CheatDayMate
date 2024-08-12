@@ -58,11 +58,11 @@ struct InputView: View {
             }
         }
         .fullScreenCover(isPresented: $showDietRecordView) {
-            DietRecordView(viewModel: dietRecordViewModel, isPresented: $showDietRecordView, showAddMealImmediately: true)
+            DietRecordView()
         }
     }
     
-    private func dismissView() {
+    func dismissView() {
         withAnimation(.spring()) {
             offset = UIScreen.main.bounds.height
             blurRadius = 0
@@ -93,7 +93,7 @@ extension View {
 }
 
 struct RoundedCorner: Shape {
-    var radius: CGFloat = CGFloat.infinity
+    var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners
 
     func path(in rect: CGRect) -> Path {
@@ -101,6 +101,3 @@ struct RoundedCorner: Shape {
         return Path(path.cgPath)
     }
 }
-
-// 예시: horizontal 사용
-// .padding(.horizontal, 10)

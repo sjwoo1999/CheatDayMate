@@ -12,7 +12,7 @@ struct HomeTabView: View {
     @EnvironmentObject var chatGPTService: ChatGPTService
     @StateObject private var viewModel: HomeTabViewModel
     @StateObject private var tabBarViewModel = CustomTabBarViewModel()
-    @StateObject private var dietRecordViewModel = DietRecordViewModel(chatGPTService: ChatGPTService(apiKey: AppConfig.chatGPTAPIKey))
+    @StateObject private var dietRecordViewModel = DietRecordViewModel()
     @State private var showInputView = false
     @State private var blurRadius: CGFloat = 0
     

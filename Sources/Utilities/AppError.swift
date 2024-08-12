@@ -20,8 +20,6 @@ enum AppError: Error {
             return "Network Error: \(message)"
         case .unknownError(let message):
             return "Unknown Error: \(message)"
-        @unknown default:
-            return "unknown error"
         }
     }
 }

@@ -6,60 +6,77 @@
 //
 
 import Foundation
-import Combine
 
 class DietRecordViewModel: ObservableObject {
     @Published var meals: [Meal] = []
-    @Published var isAnalyzing: Bool = false
-    @Published var error: String?
-    @Published var analysisResults: [UUID: String] = [:]
     @Published var selectedDate: Date = Date()
+    @Published var selectedMealForAnalysis: Meal?
+    @Published var analysisResult: DietAnalysisResult?
+    @Published var isAnalyzing: Bool = false
     
-    private let chatGPTService: ChatGPTService
-    
-    init(chatGPTService: ChatGPTService) {
-        self.chatGPTService = chatGPTService
+    enum DietRecordError: Error {
+        case analysisFailure(String)
+        case dataLoadingFailure(String)
     }
     
-    func addMeal(name: String, calories: Int, imageData: Data?) {
-        let newMeal = Meal(id: UUID(), name: name, calories: calories, date: selectedDate)
-        meals.append(newMeal)
-        
-        if let imageData = imageData {
-            analyzeMealImage(mealId: newMeal.id, imageData: imageData)
+    func addMeal(meal: Meal) {
+        DispatchQueue.main.async {
+            self.meals.append(meal)
         }
     }
     
-    func deleteMeal(at offsets: IndexSet) {
-        meals.remove(atOffsets: offsets)
-    }
-    
-    private func analyzeMealImage(mealId: UUID, imageData: Data) {
-        isAnalyzing = true
-        error = nil
+    func analyzeDiet(meal: Meal) async throws -> DietAnalysisResult {
+        await MainActor.run {
+            self.isAnalyzing = true
+        }
         
-        Task {
-            do {
-                let analysis = try await chatGPTService.analyzeImage(imageData)
-                DispatchQueue.main.async {
-                    self.analysisResults[mealId] = analysis
-                    self.isAnalyzing = false
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.error = error.localizedDescription
-                    self.isAnalyzing = false
-                }
+        do {
+            // Simulate API call
+            try await Task.sleep(nanoseconds: 2_000_000_000)
+            let result = DietAnalysisResult(
+                totalCalories: meal.calories,
+                macroRatio: MacroRatio(carbs: 0.5, protein: 0.3, fat: 0.2),
+                foodDetails: [FoodDetail(name: meal.name, weight: 300, macros: MacroRatio(carbs: 0.6, protein: 0.2, fat: 0.2))],
+                nutritionalAnalysis: "This meal is balanced but slightly high in carbohydrates.",
+                recommendations: "Consider adding more vegetables to increase fiber intake.",
+                precautions: "Watch out for added sugars in processed foods."
+            )
+            
+            await MainActor.run {
+                self.isAnalyzing = false
+                self.analysisResult = result
             }
+            
+            return result
+        } catch {
+            await MainActor.run {
+                self.isAnalyzing = false
+            }
+            throw DietRecordError.analysisFailure("Failed to analyze diet: \(error.localizedDescription)")
         }
     }
     
-    func getAnalysisResult(for meal: Meal) -> String? {
-        return analysisResults[meal.id]
+    func loadMeals(for date: Date) async throws {
+        let calendar = Calendar.current
+        do {
+            // Simulate asynchronous data loading
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            let filteredMeals = meals.filter { calendar.isDate($0.date, inSameDayAs: date) }
+            await MainActor.run {
+                self.meals = filteredMeals
+            }
+        } catch {
+            throw DietRecordError.dataLoadingFailure("Failed to load meals: \(error.localizedDescription)")
+        }
     }
     
-    func loadMeals(for date: Date) {
-        // TODO: Implement loading meals for a specific date
-        // This could involve fetching from a local database or an API
+    func getAnalysisResult(for meal: Meal?) async throws -> DietAnalysisResult {
+        guard let unwrappedMeal = meal else {
+            throw DietRecordError.analysisFailure("Meal is nil")
+        }
+        if let existingResult = analysisResult, selectedMealForAnalysis == unwrappedMeal {
+            return existingResult
+        }
+        return try await analyzeDiet(meal: unwrappedMeal)
     }
 }

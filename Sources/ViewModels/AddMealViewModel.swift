@@ -27,4 +27,9 @@ class AddMealViewModel: ObservableObject {
             }
         }
     }
+    
+    func analyzeDiet(name: String, calories: Int, imageData: Data?) async -> DietAnalysisResult? {
+        // 실제 분석 로직 구현
+        return DietAnalysisResult.mock() // 임시로 mock 데이터 반환
+    }
 }

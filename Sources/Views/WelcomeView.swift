@@ -8,61 +8,53 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    @StateObject private var viewModel = WelcomeViewModel()
+    @State private var path = NavigationPath()
+    @State private var isPresented = false
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Image(systemName: "house.fill") // Placeholder for CheatDayMateLogo
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 200, height: 200)
-                
-                Text("Welcome to Cheat Day Mate")
-                    .font(.title)
-                
-                Text("This is a MVP version of Cheat Day Mate.")
-                    .font(.subheadline)
-                
-                Text("Hope you enjoy it :)")
-                    .font(.subheadline)
-                
-                NavigationLink(destination: LoginView(), isActive: Binding(
-                    get: { viewModel.navigationDestination == "LoginView" },
-                    set: { isActive in
-                        if !isActive {
-                            viewModel.navigationDestination = nil
-                        }
-                    }
-                )) {
-                    Button("Get started") {
-                        viewModel.navigateToLogin()
-                    }
-                    .padding()
-                    .background(Color.orange)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+        if #available(iOS 16.0, *) {
+            NavigationStack(path: $path) {
+                welcomeContent
+            }
+        } else {
+            NavigationView {
+                welcomeContent
+            }
+        }
+    }
+    
+    @ViewBuilder
+    var welcomeContent: some View {
+        VStack(spacing: 20) {
+            Text("CheatDayMate에 오신 것을 환영합니다!")
+                .font(.largeTitle)
+                .multilineTextAlignment(.center)
+            
+            Text("건강한 식단 관리를 시작해보세요.")
+                .font(.subheadline)
+            
+            if #available(iOS 16.0, *) {
+                NavigationLink("식단 기록", value: "dietRecord")
+                NavigationLink("식사 추가", value: "addMeal")
+            } else {
+                NavigationLink(destination: DietRecordView()) {
+                    Text("식단 기록")
                 }
-                
-                NavigationLink(destination: HomeTabView(authService: AuthService(), chatGPTService: ChatGPTService(apiKey: AppConfig.chatGPTAPIKey)), isActive: Binding(
-                    get: { viewModel.navigationDestination == "HomeTabView" },
-                    set: { isActive in
-                        if !isActive {
-                            viewModel.navigationDestination = nil
-                        }
-                    }
-                )) {
-                    Button("Go to Home") {
-                        viewModel.navigateToHome()
-                    }
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                NavigationLink(destination: AddMealView(viewModel: DietRecordViewModel(), isPresented: $isPresented)) {
+                    Text("식사 추가")
                 }
             }
-            .padding()
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .padding()
+        .navigationDestination(for: String.self) { value in
+            switch value {
+            case "dietRecord":
+                DietRecordView()
+            case "addMeal":
+                AddMealView(viewModel: DietRecordViewModel(), isPresented: $isPresented)
+            default:
+                EmptyView()
+            }
+        }
     }
 }

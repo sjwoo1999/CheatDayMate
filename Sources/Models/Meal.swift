@@ -7,18 +7,26 @@
 
 import Foundation
 
-struct Meal: Identifiable, Codable {
+struct Meal: Identifiable, Codable, Equatable, Hashable {
     let id: UUID
     let name: String
     let calories: Int
     let date: Date
-    let imageData: Data? // 이미지 데이터를 위한 속성 추가
+    let imageData: Data?
     
     init(id: UUID = UUID(), name: String, calories: Int, date: Date, imageData: Data? = nil) {
         self.id = id
         self.name = name
         self.calories = calories
         self.date = date
-        self.imageData = imageData // 초기화 추가
+        self.imageData = imageData
+    }
+    
+    static func == (lhs: Meal, rhs: Meal) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
