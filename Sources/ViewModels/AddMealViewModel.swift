@@ -20,7 +20,7 @@ class AddMealViewModel: ObservableObject {
             do {
                 let result = try await chatGPTService.analyzeImage(imageData)
                 DispatchQueue.main.async {
-                    self.analysisResult = result
+                    self.analysisResult = result.description
                 }
             } catch {
                 // 에러 처리

@@ -11,7 +11,7 @@ struct Meal: Identifiable, Codable, Equatable, Hashable {
     let id: UUID
     let name: String
     let calories: Int
-    let date: Date
+    let date: Date  
     let imageData: Data?
     
     init(id: UUID = UUID(), name: String, calories: Int, date: Date, imageData: Data? = nil) {

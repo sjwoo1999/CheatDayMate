@@ -9,7 +9,9 @@ import Foundation
 import Combine
 
 class AuthService: ObservableObject {
-    var isUserLoggedIn: Bool = false
+    @Published var isUserLoggedIn: Bool = false
     
-    // 다른 필요한 메서드들...
+    func handleKakaoLogin(success: Bool) {
+        isUserLoggedIn = success
+    }
 }

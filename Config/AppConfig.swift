@@ -12,9 +12,17 @@ struct AppConfig {
         if let apiKey = ProcessInfo.processInfo.environment["CHATGPT_API_KEY"] {
             return apiKey
         } else {
-            // 기본값 사용 또는 로그 출력
             print("CHATGPT_API_KEY not found, using default key.")
             return "default-api-key" // 기본값 (안전하지 않음)
+        }
+    }()
+    
+    static let kakaoAPIKey: String = {
+        if let apiKey = ProcessInfo.processInfo.environment["KAKAO_API_KEY"] {
+            return apiKey
+        } else {
+            print("KAKAO_API_KEY not found, using default key.")
+            return "default-kakao-api-key" // 기본값 (안전하지 않음)
         }
     }()
 }

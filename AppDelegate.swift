@@ -7,12 +7,15 @@
 
 import UIKit
 import SwiftUI
+import KakaoSDKCommon
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let authService = AuthService()
     let chatGPTService = ChatGPTService(apiKey: AppConfig.chatGPTAPIKey)
 
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         
@@ -31,4 +34,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
     }
+    
 }

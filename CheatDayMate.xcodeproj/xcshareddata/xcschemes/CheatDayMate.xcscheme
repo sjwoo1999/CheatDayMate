@@ -80,6 +80,11 @@
             value = "Yes"
             isEnabled = "YES">
          </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "KAKAO_API_KEY"
+            value = "b9593c4bd0014b8943afba2d4ccd9c2f"
+            isEnabled = "YES">
+         </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction

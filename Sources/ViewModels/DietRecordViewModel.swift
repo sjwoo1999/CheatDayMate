@@ -14,6 +14,12 @@ class DietRecordViewModel: ObservableObject {
     @Published var analysisResult: DietAnalysisResult?
     @Published var isAnalyzing: Bool = false
     
+    private let chatGPTService: ChatGPTService
+    
+    init(apiKey: String) {
+        self.chatGPTService = ChatGPTService(apiKey: apiKey)
+    }
+    
     enum DietRecordError: Error {
         case analysisFailure(String)
         case dataLoadingFailure(String)
@@ -25,33 +31,24 @@ class DietRecordViewModel: ObservableObject {
         }
     }
     
-    func analyzeDiet(meal: Meal) async throws -> DietAnalysisResult {
+    func analyzeDietWithImage(meal: Meal, imageData: Data) async throws -> DietAnalysisResult {
         await MainActor.run {
             self.isAnalyzing = true
         }
         
         do {
-            // Simulate API call
-            try await Task.sleep(nanoseconds: 2_000_000_000)
-            let result = DietAnalysisResult(
-                totalCalories: meal.calories,
-                macroRatio: MacroRatio(carbs: 0.5, protein: 0.3, fat: 0.2),
-                foodDetails: [FoodDetail(name: meal.name, weight: 300, macros: MacroRatio(carbs: 0.6, protein: 0.2, fat: 0.2))],
-                nutritionalAnalysis: "This meal is balanced but slightly high in carbohydrates.",
-                recommendations: "Consider adding more vegetables to increase fiber intake.",
-                precautions: "Watch out for added sugars in processed foods."
-            )
-            
+            let analysisResult = try await chatGPTService.analyzeImage(imageData)
             await MainActor.run {
                 self.isAnalyzing = false
-                self.analysisResult = result
+                self.analysisResult = analysisResult
             }
-            
-            return result
+            return analysisResult
         } catch {
             await MainActor.run {
                 self.isAnalyzing = false
             }
+            // 디버깅 정보를 추가하여 에러 메시지 개선
+            print("Failed to analyze diet with error: \(error.localizedDescription)")
             throw DietRecordError.analysisFailure("Failed to analyze diet: \(error.localizedDescription)")
         }
     }
@@ -59,7 +56,7 @@ class DietRecordViewModel: ObservableObject {
     func loadMeals(for date: Date) async throws {
         let calendar = Calendar.current
         do {
-            // Simulate asynchronous data loading
+            // 비동기 데이터 로딩 시뮬레이션
             try await Task.sleep(nanoseconds: 1_000_000_000)
             let filteredMeals = meals.filter { calendar.isDate($0.date, inSameDayAs: date) }
             await MainActor.run {
@@ -77,6 +74,10 @@ class DietRecordViewModel: ObservableObject {
         if let existingResult = analysisResult, selectedMealForAnalysis == unwrappedMeal {
             return existingResult
         }
-        return try await analyzeDiet(meal: unwrappedMeal)
+        if let imageData = unwrappedMeal.imageData {
+            return try await analyzeDietWithImage(meal: unwrappedMeal, imageData: imageData)
+        } else {
+            throw DietRecordError.analysisFailure("No image data available for analysis")
+        }
     }
 }

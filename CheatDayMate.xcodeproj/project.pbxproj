@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC4317F5F5008F5EA989DE45 /* Pods_CheatDayMate_CheatDayMateUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5E3B856C6988667207BC83 /* Pods_CheatDayMate_CheatDayMateUITests.framework */; };
-		AF38FB89A711A72E5C00FCF1 /* Pods_CheatDayMateTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9B751E913C092467409C52E /* Pods_CheatDayMateTests.framework */; };
+		6F3320965F59926D00170931 /* Pods_CheatDayMate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65CAA9E7F8052AB83EFF85D1 /* Pods_CheatDayMate.framework */; };
 		B80D2D522C67CB71001304C2 /* CheatDayMateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4B7D2C6758F40009B4BE /* CheatDayMateApp.swift */; };
 		B80D2D532C67CB71001304C2 /* CheatDayMateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4B7D2C6758F40009B4BE /* CheatDayMateApp.swift */; };
 		B80D2D542C67CB7D001304C2 /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4B592C6758060009B4BE /* SuccessView.swift */; };
@@ -70,6 +69,9 @@
 		B8297B4E2C6A360700525BD8 /* DietAnalysisResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B4D2C6A360700525BD8 /* DietAnalysisResult.swift */; };
 		B8297B4F2C6A360700525BD8 /* DietAnalysisResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B4D2C6A360700525BD8 /* DietAnalysisResult.swift */; };
 		B8297B502C6A360700525BD8 /* DietAnalysisResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B4D2C6A360700525BD8 /* DietAnalysisResult.swift */; };
+		B8297B5A2C6B53CF00525BD8 /* DietAnalysisResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B592C6B53CF00525BD8 /* DietAnalysisResultView.swift */; };
+		B8297B5B2C6B53CF00525BD8 /* DietAnalysisResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B592C6B53CF00525BD8 /* DietAnalysisResultView.swift */; };
+		B8297B5C2C6B53CF00525BD8 /* DietAnalysisResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B592C6B53CF00525BD8 /* DietAnalysisResultView.swift */; };
 		B84508692C6672D600B66212 /* CheatDayMateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84508682C6672D600B66212 /* CheatDayMateTests.swift */; };
 		B84508732C6672D600B66212 /* CheatDayMateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84508722C6672D600B66212 /* CheatDayMateUITests.swift */; };
 		B84508752C6672D600B66212 /* CheatDayMateUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84508742C6672D600B66212 /* CheatDayMateUITestsLaunchTests.swift */; };
@@ -110,7 +112,8 @@
 		B88B4B892C675A600009B4BE /* CheatDayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4B882C675A600009B4BE /* CheatDayService.swift */; };
 		B88B4B8B2C675AA70009B4BE /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4B8A2C675AA70009B4BE /* Date+Formatting.swift */; };
 		B88B4B8D2C675F050009B4BE /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4B8C2C675F050009B4BE /* AppError.swift */; };
-		F242303595021683D2DFBB70 /* Pods_CheatDayMate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BE4127B6A9D03E7825CA55 /* Pods_CheatDayMate.framework */; };
+		C960AAC2A1FEF938E25DF2B5 /* Pods_CheatDayMateTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74BBD45A5979E385235F31CD /* Pods_CheatDayMateTests.framework */; };
+		F19E41D2E4BE9CB9ECB70075 /* Pods_CheatDayMate_CheatDayMateUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D86B90A0F6166FA6F7C89689 /* Pods_CheatDayMate_CheatDayMateUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,11 +134,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		136EEE8B79E1B29E5702C8C2 /* Pods-CheatDayMate-CheatDayMateUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMate-CheatDayMateUITests.debug.xcconfig"; path = "Target Support Files/Pods-CheatDayMate-CheatDayMateUITests/Pods-CheatDayMate-CheatDayMateUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		2D5E3B856C6988667207BC83 /* Pods_CheatDayMate_CheatDayMateUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheatDayMate_CheatDayMateUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		316F85DB291ABC9172A70B10 /* Pods-CheatDayMate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMate.release.xcconfig"; path = "Target Support Files/Pods-CheatDayMate/Pods-CheatDayMate.release.xcconfig"; sourceTree = "<group>"; };
-		652DD0F91C52DA38FC01493A /* Pods-CheatDayMateTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMateTests.debug.xcconfig"; path = "Target Support Files/Pods-CheatDayMateTests/Pods-CheatDayMateTests.debug.xcconfig"; sourceTree = "<group>"; };
-		A73F88AD06E61D691FC7CDE3 /* Pods-CheatDayMate-CheatDayMateUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMate-CheatDayMateUITests.release.xcconfig"; path = "Target Support Files/Pods-CheatDayMate-CheatDayMateUITests/Pods-CheatDayMate-CheatDayMateUITests.release.xcconfig"; sourceTree = "<group>"; };
+		55971E94380D055299BBF1FD /* Pods-CheatDayMateTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMateTests.release.xcconfig"; path = "Target Support Files/Pods-CheatDayMateTests/Pods-CheatDayMateTests.release.xcconfig"; sourceTree = "<group>"; };
+		65CAA9E7F8052AB83EFF85D1 /* Pods_CheatDayMate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheatDayMate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		745A93A267FAB2DE0D547C8E /* Pods-CheatDayMate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMate.release.xcconfig"; path = "Target Support Files/Pods-CheatDayMate/Pods-CheatDayMate.release.xcconfig"; sourceTree = "<group>"; };
+		74BBD45A5979E385235F31CD /* Pods_CheatDayMateTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheatDayMateTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76C5AF576D2F2C470BFF6311 /* Pods-CheatDayMate-CheatDayMateUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMate-CheatDayMateUITests.debug.xcconfig"; path = "Target Support Files/Pods-CheatDayMate-CheatDayMateUITests/Pods-CheatDayMate-CheatDayMateUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		903748A23524566AC9D41CD9 /* Pods-CheatDayMate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMate.debug.xcconfig"; path = "Target Support Files/Pods-CheatDayMate/Pods-CheatDayMate.debug.xcconfig"; sourceTree = "<group>"; };
 		B80D2D682C687F2B001304C2 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		B80D2D6C2C68812E001304C2 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		B80D2D722C689CC3001304C2 /* CustomConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfiguration.swift; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 		B8109D452C67BC9A0079CECE /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		B8109D492C67C9250079CECE /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		B8297B4D2C6A360700525BD8 /* DietAnalysisResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietAnalysisResult.swift; sourceTree = "<group>"; };
+		B8297B592C6B53CF00525BD8 /* DietAnalysisResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietAnalysisResultView.swift; sourceTree = "<group>"; };
 		B84508542C6672D500B66212 /* CheatDayMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheatDayMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B84508642C6672D600B66212 /* CheatDayMateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheatDayMateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B84508682C6672D600B66212 /* CheatDayMateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatDayMateTests.swift; sourceTree = "<group>"; };
@@ -189,10 +194,9 @@
 		B88B4B882C675A600009B4BE /* CheatDayService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatDayService.swift; sourceTree = "<group>"; };
 		B88B4B8A2C675AA70009B4BE /* Date+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
 		B88B4B8C2C675F050009B4BE /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
-		C5BE4127B6A9D03E7825CA55 /* Pods_CheatDayMate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheatDayMate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA538703C3FAE6512D148CEA /* Pods-CheatDayMateTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMateTests.release.xcconfig"; path = "Target Support Files/Pods-CheatDayMateTests/Pods-CheatDayMateTests.release.xcconfig"; sourceTree = "<group>"; };
-		E94C25A593341AB7F7712E4F /* Pods-CheatDayMate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMate.debug.xcconfig"; path = "Target Support Files/Pods-CheatDayMate/Pods-CheatDayMate.debug.xcconfig"; sourceTree = "<group>"; };
-		F9B751E913C092467409C52E /* Pods_CheatDayMateTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheatDayMateTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D86B90A0F6166FA6F7C89689 /* Pods_CheatDayMate_CheatDayMateUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheatDayMate_CheatDayMateUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1850155B9F34A19BC01B942 /* Pods-CheatDayMate-CheatDayMateUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMate-CheatDayMateUITests.release.xcconfig"; path = "Target Support Files/Pods-CheatDayMate-CheatDayMateUITests/Pods-CheatDayMate-CheatDayMateUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F46CA9FA2529B872931578B8 /* Pods-CheatDayMateTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheatDayMateTests.debug.xcconfig"; path = "Target Support Files/Pods-CheatDayMateTests/Pods-CheatDayMateTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,7 +204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F242303595021683D2DFBB70 /* Pods_CheatDayMate.framework in Frameworks */,
+				6F3320965F59926D00170931 /* Pods_CheatDayMate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +212,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF38FB89A711A72E5C00FCF1 /* Pods_CheatDayMateTests.framework in Frameworks */,
+				C960AAC2A1FEF938E25DF2B5 /* Pods_CheatDayMateTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,19 +220,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC4317F5F5008F5EA989DE45 /* Pods_CheatDayMate_CheatDayMateUITests.framework in Frameworks */,
+				F19E41D2E4BE9CB9ECB70075 /* Pods_CheatDayMate_CheatDayMateUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0421ADD3125B4226D3EF8BB5 /* Frameworks */ = {
+		1409A07376B1A7F367AED59B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C5BE4127B6A9D03E7825CA55 /* Pods_CheatDayMate.framework */,
-				2D5E3B856C6988667207BC83 /* Pods_CheatDayMate_CheatDayMateUITests.framework */,
-				F9B751E913C092467409C52E /* Pods_CheatDayMateTests.framework */,
+				65CAA9E7F8052AB83EFF85D1 /* Pods_CheatDayMate.framework */,
+				D86B90A0F6166FA6F7C89689 /* Pods_CheatDayMate_CheatDayMateUITests.framework */,
+				74BBD45A5979E385235F31CD /* Pods_CheatDayMateTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -236,12 +240,12 @@
 		4FB382DC692F3805DB2CB462 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E94C25A593341AB7F7712E4F /* Pods-CheatDayMate.debug.xcconfig */,
-				316F85DB291ABC9172A70B10 /* Pods-CheatDayMate.release.xcconfig */,
-				136EEE8B79E1B29E5702C8C2 /* Pods-CheatDayMate-CheatDayMateUITests.debug.xcconfig */,
-				A73F88AD06E61D691FC7CDE3 /* Pods-CheatDayMate-CheatDayMateUITests.release.xcconfig */,
-				652DD0F91C52DA38FC01493A /* Pods-CheatDayMateTests.debug.xcconfig */,
-				CA538703C3FAE6512D148CEA /* Pods-CheatDayMateTests.release.xcconfig */,
+				903748A23524566AC9D41CD9 /* Pods-CheatDayMate.debug.xcconfig */,
+				745A93A267FAB2DE0D547C8E /* Pods-CheatDayMate.release.xcconfig */,
+				76C5AF576D2F2C470BFF6311 /* Pods-CheatDayMate-CheatDayMateUITests.debug.xcconfig */,
+				F1850155B9F34A19BC01B942 /* Pods-CheatDayMate-CheatDayMateUITests.release.xcconfig */,
+				F46CA9FA2529B872931578B8 /* Pods-CheatDayMateTests.debug.xcconfig */,
+				55971E94380D055299BBF1FD /* Pods-CheatDayMateTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -268,7 +272,7 @@
 				B84508552C6672D500B66212 /* Products */,
 				4FB382DC692F3805DB2CB462 /* Pods */,
 				B88B4B412C6756CB0009B4BE /* CheatDayMate-Bridging-Header.h */,
-				0421ADD3125B4226D3EF8BB5 /* Frameworks */,
+				1409A07376B1A7F367AED59B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -339,6 +343,7 @@
 				B8109D412C67BB520079CECE /* AddMealView.swift */,
 				B8109D492C67C9250079CECE /* SplashScreenView.swift */,
 				B80D2D6C2C68812E001304C2 /* ImagePicker.swift */,
+				B8297B592C6B53CF00525BD8 /* DietAnalysisResultView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -474,11 +479,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B84508782C6672D600B66212 /* Build configuration list for PBXNativeTarget "CheatDayMate" */;
 			buildPhases = (
-				076194BFD0FE16D94A8A753A /* [CP] Check Pods Manifest.lock */,
+				167F1484B7668EEF66FC7E24 /* [CP] Check Pods Manifest.lock */,
 				B84508502C6672D500B66212 /* Sources */,
 				B84508512C6672D500B66212 /* Frameworks */,
 				B84508522C6672D500B66212 /* Resources */,
-				6B5F1B8DD3BB2F1C1A813C32 /* [CP] Embed Pods Frameworks */,
+				F44978EA3C1AE4421C785C9F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -493,7 +498,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B845087B2C6672D600B66212 /* Build configuration list for PBXNativeTarget "CheatDayMateTests" */;
 			buildPhases = (
-				A39EB85603EDBFEA2DB0E684 /* [CP] Check Pods Manifest.lock */,
+				6487A3C704747251725FF7A6 /* [CP] Check Pods Manifest.lock */,
 				B84508602C6672D600B66212 /* Sources */,
 				B84508612C6672D600B66212 /* Frameworks */,
 				B84508622C6672D600B66212 /* Resources */,
@@ -512,11 +517,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B845087E2C6672D600B66212 /* Build configuration list for PBXNativeTarget "CheatDayMateUITests" */;
 			buildPhases = (
-				8797E340857FBC180206AD83 /* [CP] Check Pods Manifest.lock */,
+				C132A86CBC9E2841A0935DFC /* [CP] Check Pods Manifest.lock */,
 				B845086A2C6672D600B66212 /* Sources */,
 				B845086B2C6672D600B66212 /* Frameworks */,
 				B845086C2C6672D600B66212 /* Resources */,
-				E9E43AF05D06EF6103750F2C /* [CP] Embed Pods Frameworks */,
+				3165A7F6027F7C3D6ED15A6F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -604,7 +609,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		076194BFD0FE16D94A8A753A /* [CP] Check Pods Manifest.lock */ = {
+		167F1484B7668EEF66FC7E24 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -626,46 +631,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6B5F1B8DD3BB2F1C1A813C32 /* [CP] Embed Pods Frameworks */ = {
+		3165A7F6027F7C3D6ED15A6F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate/Pods-CheatDayMate-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate-CheatDayMateUITests/Pods-CheatDayMate-CheatDayMateUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate/Pods-CheatDayMate-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate-CheatDayMateUITests/Pods-CheatDayMate-CheatDayMateUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate/Pods-CheatDayMate-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate-CheatDayMateUITests/Pods-CheatDayMate-CheatDayMateUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8797E340857FBC180206AD83 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CheatDayMate-CheatDayMateUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A39EB85603EDBFEA2DB0E684 /* [CP] Check Pods Manifest.lock */ = {
+		6487A3C704747251725FF7A6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -687,21 +670,43 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E9E43AF05D06EF6103750F2C /* [CP] Embed Pods Frameworks */ = {
+		C132A86CBC9E2841A0935DFC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate-CheatDayMateUITests/Pods-CheatDayMate-CheatDayMateUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate-CheatDayMateUITests/Pods-CheatDayMate-CheatDayMateUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CheatDayMate-CheatDayMateUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate-CheatDayMateUITests/Pods-CheatDayMate-CheatDayMateUITests-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F44978EA3C1AE4421C785C9F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate/Pods-CheatDayMate-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate/Pods-CheatDayMate-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CheatDayMate/Pods-CheatDayMate-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -722,6 +727,7 @@
 				B88B4B8D2C675F050009B4BE /* AppError.swift in Sources */,
 				B8688B8E2C67919D002BA3CA /* CustomTabBarViewModel.swift in Sources */,
 				B88B4B622C6758390009B4BE /* WelcomeViewModel.swift in Sources */,
+				B8297B5A2C6B53CF00525BD8 /* DietAnalysisResultView.swift in Sources */,
 				B88B4B5E2C67581D0009B4BE /* LoginView.swift in Sources */,
 				B8297B4E2C6A360700525BD8 /* DietAnalysisResult.swift in Sources */,
 				B88B4B7A2C6758CF0009B4BE /* String+Validation.swift in Sources */,
@@ -784,6 +790,7 @@
 				B8109D4B2C67C9250079CECE /* SplashScreenView.swift in Sources */,
 				B8109D3B2C67BB240079CECE /* DietRecordView.swift in Sources */,
 				B8109D432C67BB520079CECE /* AddMealView.swift in Sources */,
+				B8297B5B2C6B53CF00525BD8 /* DietAnalysisResultView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,6 +802,7 @@
 				B8109D482C67BC9A0079CECE /* Meal.swift in Sources */,
 				B8688B8A2C678B72002BA3CA /* HomeTabView.swift in Sources */,
 				B80D2D892C68EC62001304C2 /* AddMealViewModel.swift in Sources */,
+				B8297B5C2C6B53CF00525BD8 /* DietAnalysisResultView.swift in Sources */,
 				B80D2D572C67CB81001304C2 /* KakaoLoginView.swift in Sources */,
 				B80D2D792C68A215001304C2 /* ChatGPTService.swift in Sources */,
 				B80D2D5B2C67CB88001304C2 /* WelcomeView.swift in Sources */,
@@ -975,10 +983,16 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "/Users/_woo_s.j/Desktop/woo/workspace/CheatDayMate/Preview Content/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "치팅데이";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to the camera to allow you to take photos.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to provide location-based services.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to allow you to select photos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1014,10 +1028,16 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "/Users/_woo_s.j/Desktop/woo/workspace/CheatDayMate/Preview Content/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "치팅데이";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to the camera to allow you to take photos.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to provide location-based services.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to allow you to select photos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1038,7 +1058,7 @@
 		};
 		B845087C2C6672D600B66212 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 652DD0F91C52DA38FC01493A /* Pods-CheatDayMateTests.debug.xcconfig */;
+			baseConfigurationReference = F46CA9FA2529B872931578B8 /* Pods-CheatDayMateTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1059,7 +1079,7 @@
 		};
 		B845087D2C6672D600B66212 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA538703C3FAE6512D148CEA /* Pods-CheatDayMateTests.release.xcconfig */;
+			baseConfigurationReference = 55971E94380D055299BBF1FD /* Pods-CheatDayMateTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1080,9 +1100,9 @@
 		};
 		B845087F2C6672D600B66212 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 136EEE8B79E1B29E5702C8C2 /* Pods-CheatDayMate-CheatDayMateUITests.debug.xcconfig */;
+			baseConfigurationReference = 76C5AF576D2F2C470BFF6311 /* Pods-CheatDayMate-CheatDayMateUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -1100,9 +1120,9 @@
 		};
 		B84508802C6672D600B66212 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A73F88AD06E61D691FC7CDE3 /* Pods-CheatDayMate-CheatDayMateUITests.release.xcconfig */;
+			baseConfigurationReference = F1850155B9F34A19BC01B942 /* Pods-CheatDayMate-CheatDayMateUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;

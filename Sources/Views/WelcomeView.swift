@@ -40,7 +40,7 @@ struct WelcomeView: View {
                 NavigationLink(destination: DietRecordView()) {
                     Text("식단 기록")
                 }
-                NavigationLink(destination: AddMealView(viewModel: DietRecordViewModel(), isPresented: $isPresented)) {
+                NavigationLink(destination: AddMealView(viewModel: DietRecordViewModel(apiKey: AppConfig.chatGPTAPIKey), isPresented: $isPresented)) {
                     Text("식사 추가")
                 }
             }
@@ -51,7 +51,7 @@ struct WelcomeView: View {
             case "dietRecord":
                 DietRecordView()
             case "addMeal":
-                AddMealView(viewModel: DietRecordViewModel(), isPresented: $isPresented)
+                AddMealView(viewModel: DietRecordViewModel(apiKey: AppConfig.chatGPTAPIKey), isPresented: $isPresented)
             default:
                 EmptyView()
             }

@@ -11,22 +11,19 @@ import PhotosUI
 struct AddMealView: View {
     @ObservedObject var viewModel: DietRecordViewModel
     @Binding var isPresented: Bool
-    @State private var mealName = ""
-    @State private var calories = ""
     @State private var selectedItem: PhotosPickerItem?
     @State private var selectedImageData: Data?
     @State private var showingAnalysisResult = false
     @State private var isAnalyzing = false
     @State private var showingAlert = false
     @State private var alertMessage = ""
-    
+
     var body: some View {
         NavigationView {
             ZStack {
                 Color.orange.edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 20) {
-                    inputSection
                     imageSection
                     analyzeDietButton
                     addMealButton
@@ -53,23 +50,6 @@ struct AddMealView: View {
         }
         .alert(isPresented: $showingAlert) {
             Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
-        }
-    }
-    
-    private var inputSection: some View {
-        VStack(spacing: 15) {
-            TextField("식사 이름", text: $mealName)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-                .background(Color.white)
-                .cornerRadius(15)
-            
-            TextField("칼로리", text: $calories)
-                .keyboardType(.numberPad)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-                .background(Color.white)
-                .cornerRadius(15)
         }
     }
     
@@ -140,46 +120,39 @@ struct AddMealView: View {
     }
     
     private func analyzeDiet() {
-        guard let caloriesInt = Int(calories), !isAnalyzing else { return }
-        guard !mealName.isEmpty else {
-            showAlert(message: "식사 이름을 입력해주세요.")
-            return
-        }
+        guard !isAnalyzing else { return }
         
         isAnalyzing = true
-        
-        let newMeal = Meal(name: mealName, calories: caloriesInt, date: Date(), imageData: selectedImageData)
-        
+
         Task {
             do {
-                _ = try await viewModel.analyzeDiet(meal: newMeal)
-                await MainActor.run {
-                    self.showingAnalysisResult = true
-                    self.isAnalyzing = false
-                    // 여기서 result를 사용할 수 있습니다. 예를 들어:
-                    // self.analysisResult = result
+                if let imageData = selectedImageData {
+                    let result = try await viewModel.analyzeDietWithImage(meal: Meal(name: "Analyzed Meal", calories: 0, date: Date(), imageData: imageData), imageData: imageData)
+                    await MainActor.run {
+                        viewModel.analysisResult = result
+                        self.showingAnalysisResult = true
+                    }
+                } else {
+                    showAlert(message: "이미지를 선택해주세요.")
                 }
             } catch {
                 await MainActor.run {
-                    self.isAnalyzing = false
                     showAlert(message: "식단 분석에 실패했습니다: \(error.localizedDescription)")
                 }
+            }
+            await MainActor.run {
+                self.isAnalyzing = false
             }
         }
     }
     
     private func addMeal() {
-        guard let caloriesInt = Int(calories) else {
-            showAlert(message: "올바른 칼로리 값을 입력해주세요.")
-            return
+        if let imageData = selectedImageData {
+            viewModel.addMeal(meal: Meal(name: "Analyzed Meal", calories: 0, date: Date(), imageData: imageData))
+            isPresented = false
+        } else {
+            showAlert(message: "이미지를 선택해주세요.")
         }
-        guard !mealName.isEmpty else {
-            showAlert(message: "식사 이름을 입력해주세요.")
-            return
-        }
-        
-        viewModel.addMeal(meal: Meal(name: mealName, calories: caloriesInt, date: Date(), imageData: selectedImageData))
-        isPresented = false
     }
     
     private func showAlert(message: String) {

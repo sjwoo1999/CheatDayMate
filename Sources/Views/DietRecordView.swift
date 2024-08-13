@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DietRecordView: View {
-    @StateObject private var viewModel = DietRecordViewModel()
+    @StateObject private var viewModel = DietRecordViewModel(apiKey: "YOUR_API_KEY_HERE")
     @State private var showingAddMealView = false
     @State private var selectedDate = Date()
     @State private var errorMessage: String?
@@ -101,54 +101,19 @@ struct MealRow: View {
     private func analyzeMeal() {
         Task {
             do {
-                let result = try await viewModel.analyzeDiet(meal: meal)
-                await MainActor.run {
-                    viewModel.analysisResult = result
-                    showingAnalysisResult = true
+                if let imageData = meal.imageData {
+                    let result = try await viewModel.analyzeDietWithImage(meal: meal, imageData: imageData)
+                    await MainActor.run {
+                        viewModel.analysisResult = result
+                        showingAnalysisResult = true
+                    }
+                } else {
+                    print("No image data available for analysis.")
                 }
             } catch {
                 print("Failed to analyze diet: \(error.localizedDescription)")
                 // 에러 처리 로직 추가
             }
-        }
-    }
-}
-
-struct DietAnalysisResultView: View {
-    let result: DietAnalysisResult
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Diet Analysis Result")
-                    .font(.title)
-                    .padding(.bottom)
-
-                Text("Total Calories: \(result.totalCalories) kcal")
-                    .font(.headline)
-
-                Text("Macro Ratio:")
-                    .font(.headline)
-                Text("Carbs: \(Int(result.macroRatio.carbs * 100))%")
-                Text("Protein: \(Int(result.macroRatio.protein * 100))%")
-                Text("Fat: \(Int(result.macroRatio.fat * 100))%")
-
-                Text("Nutritional Analysis:")
-                    .font(.headline)
-                    .padding(.top)
-                Text(result.nutritionalAnalysis)
-
-                Text("Recommendations:")
-                    .font(.headline)
-                    .padding(.top)
-                Text(result.recommendations)
-
-                Text("Precautions:")
-                    .font(.headline)
-                    .padding(.top)
-                Text(result.precautions)
-            }
-            .padding()
         }
     }
 }

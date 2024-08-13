@@ -5,6 +5,8 @@
 //  Created by 우성종 on 8/12/24.
 //
 
+// DietAnalysisResult.swift
+
 import Foundation
 
 public struct MacroRatio: Codable {
@@ -15,9 +17,16 @@ public struct MacroRatio: Codable {
 
 public struct FoodDetail: Codable, Identifiable {
     public var id = UUID()
-    let name: String
-    let weight: Double
-    let macros: MacroRatio
+    let name: String?
+    let weight: Double?
+    let macros: MacroRatio?
+    
+    public init(id: UUID = UUID(), name: String? = nil, weight: Double? = nil, macros: MacroRatio? = nil) {
+        self.id = id
+        self.name = name
+        self.weight = weight
+        self.macros = macros
+    }
 }
 
 public struct DietAnalysisResult: Codable {
@@ -39,7 +48,9 @@ public struct DietAnalysisResult: Codable {
         """
         
         for food in foodDetails {
-            desc += "\n  \(food.name) (\(String(format: "%.0f", food.weight))g)"
+            let name = food.name ?? "Unknown"
+            let weight = food.weight.map { "\(String(format: "%.0f", $0))g" } ?? "Unknown weight"
+            desc += "\n  \(name) (\(weight))"
         }
         
         desc += """
@@ -53,30 +64,29 @@ public struct DietAnalysisResult: Codable {
     }
     
     enum CodingKeys: String, CodingKey {
-            case totalCalories, macroRatio, foodDetails, nutritionalAnalysis, recommendations, precautions
-        }
+        case totalCalories, macroRatio, foodDetails, nutritionalAnalysis, recommendations, precautions
+    }
 
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            totalCalories = try container.decode(Int.self, forKey: .totalCalories)
-            macroRatio = try container.decode(MacroRatio.self, forKey: .macroRatio)
-            foodDetails = try container.decode([FoodDetail].self, forKey: .foodDetails)
-            nutritionalAnalysis = try container.decode(String.self, forKey: .nutritionalAnalysis)
-            recommendations = try container.decode(String.self, forKey: .recommendations)
-            precautions = try container.decode(String.self, forKey: .precautions)
-        }
-
-        // 기존의 커스텀 이니셜라이저도 유지
-        public init(totalCalories: Int, macroRatio: MacroRatio, foodDetails: [FoodDetail], nutritionalAnalysis: String, recommendations: String, precautions: String) {
-            self.totalCalories = totalCalories
-            self.macroRatio = macroRatio
-            self.foodDetails = foodDetails
-            self.nutritionalAnalysis = nutritionalAnalysis
-            self.recommendations = recommendations
-            self.precautions = precautions
-        }
-}
+    public init(totalCalories: Int, macroRatio: MacroRatio, foodDetails: [FoodDetail], nutritionalAnalysis: String, recommendations: String, precautions: String) {
+        self.totalCalories = totalCalories
+        self.macroRatio = macroRatio
+        self.foodDetails = foodDetails
+        self.nutritionalAnalysis = nutritionalAnalysis
+        self.recommendations = recommendations
+        self.precautions = precautions
+    }
     
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        totalCalories = try container.decode(Int.self, forKey: .totalCalories)
+        macroRatio = try container.decode(MacroRatio.self, forKey: .macroRatio)
+        foodDetails = try container.decode([FoodDetail].self, forKey: .foodDetails)
+        nutritionalAnalysis = try container.decode(String.self, forKey: .nutritionalAnalysis)
+        recommendations = try container.decode(String.self, forKey: .recommendations)
+        precautions = try container.decode(String.self, forKey: .precautions)
+    }
+}
+
 extension DietAnalysisResult {
     static func mock() -> DietAnalysisResult {
         DietAnalysisResult(
