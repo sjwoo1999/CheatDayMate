@@ -9,27 +9,31 @@ import Foundation
 
 class AddMealViewModel: ObservableObject {
     private let chatGPTService: ChatGPTService
-    @Published var analysisResult: String?
+    @Published var analysisResult: DietAnalysisResult?
     
     init(chatGPTService: ChatGPTService) {
         self.chatGPTService = chatGPTService
     }
     
-    func analyzeImage(_ imageData: Data) {
-        Task {
-            do {
-                let result = try await chatGPTService.analyzeImage(imageData)
-                DispatchQueue.main.async {
-                    self.analysisResult = result.description
-                }
-            } catch {
-                // 에러 처리
-            }
+    func analyzeDiet(imageData: Data) async throws -> DietAnalysisResult {
+        do {
+            let result = try await chatGPTService.analyzeImage(imageData)
+            return result
+        } catch {
+            throw error
         }
     }
     
-    func analyzeDiet(name: String, calories: Int, imageData: Data?) async -> DietAnalysisResult? {
-        // 실제 분석 로직 구현
-        return DietAnalysisResult.mock() // 임시로 mock 데이터 반환
+    func addMeal(meal: Meal) {
+        // 여기에 meal을 저장하는 로직을 구현합니다.
+        // 예: 데이터베이스에 저장하거나 배열에 추가하는 등의 작업
+        print("Meal added: \(meal)")
     }
+    
+    func analyzeDietWithImage(meal: Meal) async throws -> DietAnalysisResult {
+            guard let imageData = meal.imageData else {
+                throw NSError(domain: "AddMealViewModel", code: 1, userInfo: [NSLocalizedDescriptionKey: "No image data available"])
+            }
+            return try await analyzeDiet(imageData: imageData)
+        }
 }

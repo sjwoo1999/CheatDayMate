@@ -5,28 +5,20 @@
 //  Created by 우성종 on 8/11/24.
 //
 
-import Foundation
+import SwiftUI
 
-struct Meal: Identifiable, Codable, Equatable, Hashable {
-    let id: UUID
+struct Meal: Identifiable, Equatable {
+    let id = UUID()
     let name: String
     let calories: Int
-    let date: Date  
+    let date: Date
     let imageData: Data?
     
-    init(id: UUID = UUID(), name: String, calories: Int, date: Date, imageData: Data? = nil) {
-        self.id = id
-        self.name = name
-        self.calories = calories
-        self.date = date
-        self.imageData = imageData
-    }
-    
     static func == (lhs: Meal, rhs: Meal) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+        return lhs.id == rhs.id &&
+               lhs.name == rhs.name &&
+               lhs.calories == rhs.calories &&
+               lhs.date == rhs.date &&
+               lhs.imageData == rhs.imageData
     }
 }

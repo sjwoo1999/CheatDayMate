@@ -19,14 +19,22 @@ class ChatGPTService: ObservableObject {
         let base64Image = imageData.base64EncodedString()
         
         let body: [String: Any] = [
-            "model": "gpt-4",
+            "model": "gpt-4o",
             "messages": [
                 [
                     "role": "user",
-                    "content": """
-                    이 음식 이미지를 분석해주세요. 메뉴 항목, 칼로리 추정치, 영양 정보, 권장 사항, 주의 사항을 포함하여 분석 결과를 제공해주세요.
-                    이미지 데이터: data:image/jpeg;base64,\(base64Image)
-                    """
+                    "content": [
+                        [
+                            "type": "text",
+                            "text": "이 음식 이미지를 분석해주세요. 메뉴 항목, 칼로리 추정치, 영양 정보, 권장 사항, 주의 사항을 포함하여 분석 결과를 제공해주세요."
+                        ],
+                        [
+                            "type": "image_url",
+                            "image_url": [
+                                "url": "data:image/jpeg;base64,\(base64Image)"
+                            ]
+                        ]
+                    ]
                 ]
             ],
             "max_tokens": 500

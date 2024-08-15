@@ -46,8 +46,8 @@ struct DietRecordView: View {
                 loadMeals(for: selectedDate)
             }
             .sheet(isPresented: $showingAddMealView) {
-                AddMealView(viewModel: viewModel, isPresented: $showingAddMealView)
-            }
+                            AddMealView(viewModel: viewModel, isPresented: $showingAddMealView)
+                        }
             .alert(isPresented: $showingErrorAlert) {
                 Alert(title: Text("Error"), message: Text(errorMessage ?? "An unknown error occurred"), dismissButton: .default(Text("OK")))
             }
@@ -99,21 +99,19 @@ struct MealRow: View {
     }
 
     private func analyzeMeal() {
-        Task {
-            do {
-                if let imageData = meal.imageData {
-                    let result = try await viewModel.analyzeDietWithImage(meal: meal, imageData: imageData)
-                    await MainActor.run {
-                        viewModel.analysisResult = result
-                        showingAnalysisResult = true
+            Task {
+                do {
+                    if let imageData = meal.imageData {
+                        let result = try await viewModel.analyzeDietWithImage(imageData: imageData)
+                        await MainActor.run {
+                            viewModel.analysisResult = result
+                            showingAnalysisResult = true
+                        }
                     }
-                } else {
-                    print("No image data available for analysis.")
+                } catch {
+                    print("Failed to analyze diet: \(error.localizedDescription)")
+                    // 에러 처리 로직 추가
                 }
-            } catch {
-                print("Failed to analyze diet: \(error.localizedDescription)")
-                // 에러 처리 로직 추가
             }
         }
-    }
 }

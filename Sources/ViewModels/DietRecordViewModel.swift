@@ -31,7 +31,7 @@ class DietRecordViewModel: ObservableObject {
         }
     }
     
-    func analyzeDietWithImage(meal: Meal, imageData: Data) async throws -> DietAnalysisResult {
+    func analyzeDietWithImage(imageData: Data) async throws -> DietAnalysisResult {
         await MainActor.run {
             self.isAnalyzing = true
         }
@@ -47,10 +47,19 @@ class DietRecordViewModel: ObservableObject {
             await MainActor.run {
                 self.isAnalyzing = false
             }
-            // 디버깅 정보를 추가하여 에러 메시지 개선
             print("Failed to analyze diet with error: \(error.localizedDescription)")
             throw DietRecordError.analysisFailure("Failed to analyze diet: \(error.localizedDescription)")
         }
+    }
+    
+    func getAnalysisResult(for meal: Meal?) async throws -> DietAnalysisResult {
+        guard let unwrappedMeal = meal, let imageData = unwrappedMeal.imageData else {
+            throw DietRecordError.analysisFailure("Meal is nil or has no image data")
+        }
+        if let existingResult = analysisResult, selectedMealForAnalysis == unwrappedMeal {
+            return existingResult
+        }
+        return try await analyzeDietWithImage(imageData: imageData)
     }
     
     func loadMeals(for date: Date) async throws {
@@ -64,20 +73,6 @@ class DietRecordViewModel: ObservableObject {
             }
         } catch {
             throw DietRecordError.dataLoadingFailure("Failed to load meals: \(error.localizedDescription)")
-        }
-    }
-    
-    func getAnalysisResult(for meal: Meal?) async throws -> DietAnalysisResult {
-        guard let unwrappedMeal = meal else {
-            throw DietRecordError.analysisFailure("Meal is nil")
-        }
-        if let existingResult = analysisResult, selectedMealForAnalysis == unwrappedMeal {
-            return existingResult
-        }
-        if let imageData = unwrappedMeal.imageData {
-            return try await analyzeDietWithImage(meal: unwrappedMeal, imageData: imageData)
-        } else {
-            throw DietRecordError.analysisFailure("No image data available for analysis")
         }
     }
 }

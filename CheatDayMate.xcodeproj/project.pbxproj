@@ -72,6 +72,9 @@
 		B8297B5A2C6B53CF00525BD8 /* DietAnalysisResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B592C6B53CF00525BD8 /* DietAnalysisResultView.swift */; };
 		B8297B5B2C6B53CF00525BD8 /* DietAnalysisResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B592C6B53CF00525BD8 /* DietAnalysisResultView.swift */; };
 		B8297B5C2C6B53CF00525BD8 /* DietAnalysisResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B592C6B53CF00525BD8 /* DietAnalysisResultView.swift */; };
+		B8297B5E2C6B59C500525BD8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B5D2C6B59C500525BD8 /* ContentView.swift */; };
+		B8297B5F2C6B59C500525BD8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B5D2C6B59C500525BD8 /* ContentView.swift */; };
+		B8297B602C6B59C500525BD8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297B5D2C6B59C500525BD8 /* ContentView.swift */; };
 		B84508692C6672D600B66212 /* CheatDayMateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84508682C6672D600B66212 /* CheatDayMateTests.swift */; };
 		B84508732C6672D600B66212 /* CheatDayMateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84508722C6672D600B66212 /* CheatDayMateUITests.swift */; };
 		B84508752C6672D600B66212 /* CheatDayMateUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84508742C6672D600B66212 /* CheatDayMateUITestsLaunchTests.swift */; };
@@ -153,6 +156,7 @@
 		B8109D492C67C9250079CECE /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		B8297B4D2C6A360700525BD8 /* DietAnalysisResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietAnalysisResult.swift; sourceTree = "<group>"; };
 		B8297B592C6B53CF00525BD8 /* DietAnalysisResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietAnalysisResultView.swift; sourceTree = "<group>"; };
+		B8297B5D2C6B59C500525BD8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B84508542C6672D500B66212 /* CheatDayMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheatDayMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B84508642C6672D600B66212 /* CheatDayMateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheatDayMateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B84508682C6672D600B66212 /* CheatDayMateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatDayMateTests.swift; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 				B8109D492C67C9250079CECE /* SplashScreenView.swift */,
 				B80D2D6C2C68812E001304C2 /* ImagePicker.swift */,
 				B8297B592C6B53CF00525BD8 /* DietAnalysisResultView.swift */,
+				B8297B5D2C6B59C500525BD8 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -743,6 +748,7 @@
 				B8109D3E2C67BB360079CECE /* DietRecordViewModel.swift in Sources */,
 				B88B4B5A2C6758060009B4BE /* SuccessView.swift in Sources */,
 				B88B4B662C67584E0009B4BE /* KakaoLoginViewModel.swift in Sources */,
+				B8297B5E2C6B59C500525BD8 /* ContentView.swift in Sources */,
 				B8688B8C2C679178002BA3CA /* CustomTabBar.swift in Sources */,
 				B88B4B562C6757EF0009B4BE /* User.swift in Sources */,
 				B88B4B6A2C6758630009B4BE /* HomeTabViewModel.swift in Sources */,
@@ -789,6 +795,7 @@
 				B8297B4F2C6A360700525BD8 /* DietAnalysisResult.swift in Sources */,
 				B8109D4B2C67C9250079CECE /* SplashScreenView.swift in Sources */,
 				B8109D3B2C67BB240079CECE /* DietRecordView.swift in Sources */,
+				B8297B5F2C6B59C500525BD8 /* ContentView.swift in Sources */,
 				B8109D432C67BB520079CECE /* AddMealView.swift in Sources */,
 				B8297B5B2C6B53CF00525BD8 /* DietAnalysisResultView.swift in Sources */,
 			);
@@ -824,6 +831,7 @@
 				B8109D402C67BB360079CECE /* DietRecordViewModel.swift in Sources */,
 				B8109D442C67BB520079CECE /* AddMealView.swift in Sources */,
 				B84508732C6672D600B66212 /* CheatDayMateUITests.swift in Sources */,
+				B8297B602C6B59C500525BD8 /* ContentView.swift in Sources */,
 				B80D2D632C67CB96001304C2 /* SuccessViewModel.swift in Sources */,
 				B8109D3C2C67BB240079CECE /* DietRecordView.swift in Sources */,
 				B80D2D652C67CBA1001304C2 /* User.swift in Sources */,

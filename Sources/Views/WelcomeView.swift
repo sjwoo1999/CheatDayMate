@@ -10,6 +10,7 @@ import SwiftUI
 struct WelcomeView: View {
     @State private var path = NavigationPath()
     @State private var isPresented = false
+    @StateObject private var viewModel = DietRecordViewModel(apiKey: AppConfig.chatGPTAPIKey)
     
     var body: some View {
         if #available(iOS 16.0, *) {
@@ -40,7 +41,7 @@ struct WelcomeView: View {
                 NavigationLink(destination: DietRecordView()) {
                     Text("식단 기록")
                 }
-                NavigationLink(destination: AddMealView(viewModel: DietRecordViewModel(apiKey: AppConfig.chatGPTAPIKey), isPresented: $isPresented)) {
+                NavigationLink(destination: AddMealView(viewModel: viewModel, isPresented: $isPresented)) {
                     Text("식사 추가")
                 }
             }
@@ -51,7 +52,7 @@ struct WelcomeView: View {
             case "dietRecord":
                 DietRecordView()
             case "addMeal":
-                AddMealView(viewModel: DietRecordViewModel(apiKey: AppConfig.chatGPTAPIKey), isPresented: $isPresented)
+                AddMealView(viewModel: viewModel, isPresented: $isPresented)
             default:
                 EmptyView()
             }
