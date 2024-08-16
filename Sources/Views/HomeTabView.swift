@@ -21,7 +21,9 @@ struct HomeTabView: View {
                 VStack(spacing: 0) {
                     // Top section
                     VStack(spacing: 10) {
+                        
                         HStack {
+                            
                             Button(action: { viewModel.addCalories(-10000) }) {
                                 Text("-10,000 칼로리")
                                     .padding(.vertical, 10)
@@ -39,9 +41,26 @@ struct HomeTabView: View {
                                     .foregroundColor(.white)
                                     .cornerRadius(20)
                             }
+                            
+                            /*
+                            Button(action: { viewModel.addCalories(-10000) }) {
+                                    Color.clear
+                                }
+                                .frame(width: 44, height: 44)  // 애플의 권장 최소 탭 영역
+                                .contentShape(Rectangle())
+                                
+                                Spacer()
+                                
+                                Button(action: { viewModel.addCalories(10000) }) {
+                                    Color.clear
+                                }
+                                .frame(width: 44, height: 44)
+                                .contentShape(Rectangle())
+                            */
                         }
                         .padding(.horizontal, 20)
                         .padding(.top, geometry.safeAreaInsets.top + 10)
+                         
                         
                         Text("오늘은? \(viewModel.formattedDate)")
                             .font(.system(size: 24, weight: .bold))
